@@ -111,20 +111,23 @@ class DBProfilerViewer extends Controller {
 	}
 
 	protected function getAnalyzedQueryObject($query) {
-		static $prevQueries = array();
-
-		if(stristr($query->query, 'SELECT')) {
-			$query->type  = 'select';
-		} elseif(stristr($query->query, 'DELETE')) {
-			$query->type  = 'delete';
-		} elseif(stristr($query->query, 'UPDATE')) {
-			$query->type = 'update';
-		} elseif(strpos($query->query, 'SHOW') === 0) {
-			$query->type = 'show';
-		}
 		preg_match_all('|\"([a-z_A-Z]*)\"\."([a-z_A-Z]*)\"|', $query->query, $matches);
 		$query->tables = array_unique($matches[1]);
 		$query->hash = sha1($query->query);
+		
+		if(strpos(trim($query->query), 'SELECT') === 0) {
+			$query->type  = 'select';
+		} elseif(strpos(trim($query->query), 'DELETE') === 0) {
+			$query->type  = 'delete';
+		} elseif(strpos(trim($query->query), 'UPDATE') === 0) {
+			$query->type = 'update';
+		} elseif(strpos(trim($query->query), 'INSERT') === 0) {
+			$query->type = 'insert';
+		} elseif(strpos(trim($query->query), 'SHOW') === 0) {
+			$query->type = 'show';
+		} elseif(strpos(trim($query->query), 'DESCRIBE') === 0) {
+			$query->type = 'show';
+		}
 
 		return $query;
 	}

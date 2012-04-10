@@ -18,7 +18,9 @@
 			.summary {font-size: 14px;}
 			.type-show {color: #888;}
 			.type-select {color: #000;}
-			.type-update {color:#900;}
+			.type-delete {color:#900;}
+			.type-update {color:#006;}
+			.type-insert {color:#060}
 			.duplicates{ border: 1px solid #000; text-align: center;}
 			td.query {cursor: pointer;}
 			.hide { display: none; }
