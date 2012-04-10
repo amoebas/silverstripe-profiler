@@ -1,0 +1,37 @@
+diff --git sapphire/model/DB.php model/DB.php
+index d3adc26..51d93a8 100644
+--- sapphire/model/DB.php
++++ sapphire/model/DB.php
+@@ -117,6 +117,16 @@ class DB {
+ 		return self::getConn()->getConnect($parameters);
+ 	}
+ 
++	protected static $profiler = null;
++
++	public static function set_profiler($profiler) {
++		self::$profiler = $profiler;
++	}
++
++	public static function remove_profiler() {
++		self::$profiler = null;
++	}
++
+ 	/**
+ 	 * Execute the given SQL query.
+ 	 * @param string $sql The SQL query to execute
+@@ -125,7 +135,14 @@ class DB {
+ 	 */
+ 	static function query($sql, $errorLevel = E_USER_ERROR) {
+ 		self::$lastQuery = $sql;
+-		
++
++		if(isset(self::$profiler)) {
++			self::$profiler->start($sql);
++			$result = self::getConn()->query($sql, $errorLevel);
++			self::$profiler->stop();
++			return $result;
++		}
++
+ 		return self::getConn()->query($sql, $errorLevel);
+ 	}
+ 
