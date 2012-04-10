@@ -37,7 +37,7 @@ class DBProfiler {
 		$query->query = $this->lastQuery;
 		$query->time =$this->getLastRuntime();
 		$this->list->push($query);
-		$this->list->setURL(Controller::curr()->getRequest()->getUrl());
+		$this->list->setURL($_SERVER['REQUEST_URI']);
 	}
 
 	public function getLastRuntime() {

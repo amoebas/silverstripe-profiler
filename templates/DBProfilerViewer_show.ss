@@ -45,7 +45,7 @@
 						<th>sha1</th>
 						<th>query</th>
 					</tr>
-					<% control $Queries %>
+					<% control Queries %>
 					<tr>
 						<td>$Time</td>
 						<td <% if Duplicates %>class="duplicates" style="background-color: #$BackgroundColor; color: #$Color">$Duplicates <% else %>><% end_if %></td>

@@ -38,7 +38,7 @@
 						<th>Url</th>
 						<th>When</th>
 					</tr>
-					<% control $QueryList %>
+					<% control QueryList %>
 					<tr>
 						<td>$TotalTime</td>
 						<td>$Count</td>

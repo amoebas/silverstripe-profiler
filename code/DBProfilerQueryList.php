@@ -1,11 +1,18 @@
 <?php
 
-class DBProfilerQueryList extends ArrayList {
+class DBProfilerQueryList extends DataObjectSet {
 
 	protected $url = null;
 
+	public function __construct($array=null) {
+		if(!$array){
+			$array = array();
+		}
+		parent::__construct($array);
+	}
+	
 	public function Link() {
-		return Director::absoluteURL('/dev/profiler/'.$this->Sha1);
+		return Director::absoluteBaseURL().'dev/profiler/'.$this->Sha1;
 	}
 
  	public function setURL($url) {
