@@ -1,11 +1,12 @@
-diff --git sapphire/model/DB.php model/DB.php
-index d3adc26..51d93a8 100644
---- sapphire/model/DB.php
-+++ sapphire/model/DB.php
-@@ -117,6 +117,16 @@ class DB {
- 		return self::getConn()->getConnect($parameters);
- 	}
- 
+diff --git sapphire/core/model/DB.php sapphire/core/model/DB.php
+index 6a25841..c942a99 100755
+--- sapphire/core/model/DB.php
++++ sapphire/core/model/DB.php
+@@ -32,6 +32,16 @@ class DB {
+ 	 * Internal flag to keep track of when db connection was attempted.
+ 	 */
+ 	private static $connection_attempted = false;
++	
 +	protected static $profiler = null;
 +
 +	public static function set_profiler($profiler) {
@@ -15,23 +16,20 @@ index d3adc26..51d93a8 100644
 +	public static function remove_profiler() {
 +		self::$profiler = null;
 +	}
-+
+ 
  	/**
- 	 * Execute the given SQL query.
- 	 * @param string $sql The SQL query to execute
-@@ -125,7 +135,14 @@ class DB {
- 	 */
+ 	 * Set the global database connection.
+@@ -105,6 +115,13 @@ class DB {
  	static function query($sql, $errorLevel = E_USER_ERROR) {
  		self::$lastQuery = $sql;
--		
-+
+ 		
 +		if(isset(self::$profiler)) {
 +			self::$profiler->start($sql);
 +			$result = self::getConn()->query($sql, $errorLevel);
 +			self::$profiler->stop();
 +			return $result;
 +		}
-+
++		
  		return self::getConn()->query($sql, $errorLevel);
  	}
  
