@@ -2,7 +2,7 @@
 
 class DBProfilerQuery extends ViewableData {
 
-	protected $type = null;
+	public $type = null;
 
 	protected $duplicates = 0;
 
@@ -47,7 +47,7 @@ class DBProfilerQuery extends ViewableData {
 	public function getType() {
 		return $this->type;
 	}
-
+	
 	public function getDuplicates() {
 		return $this->duplicates;
 	}
