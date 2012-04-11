@@ -5,7 +5,7 @@ class DBProfilerQueryList extends ArrayList {
 	protected $url = null;
 
 	public function Link() {
-		return Director::absoluteURL('/dev/profiler/'.$this->Sha1);
+		return Director::absoluteBaseURL().'dev/profiler/'.$this->Sha1;
 	}
 
  	public function setURL($url) {

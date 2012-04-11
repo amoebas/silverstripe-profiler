@@ -27,7 +27,7 @@ class DBProfilerViewer extends Controller {
 	}
 
 	public function Link() {
-		return '/dev/profiler/';
+		return Director::absoluteBaseURL().'dev/profiler/';
 	}
 
 	/**
