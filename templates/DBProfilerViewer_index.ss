@@ -38,14 +38,14 @@
 						<th>Url</th>
 						<th>When</th>
 					</tr>
-					<% control $QueryList %>
+					<% loop List %>	  
 					<tr>
 						<td>$TotalTime</td>
 						<td>$Count</td>
 						<td>$Url</td>
 						<td><a href="$Link">$DateTime</a></td>
 					</tr>
-					<% end_control %>
+					<% end_loop %>
 				</thead>
 			</table>
 		</div>

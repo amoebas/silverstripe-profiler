@@ -32,7 +32,7 @@
 			<h1>DBProfiler</h1>
 			<a href="$Link">Back to list</a>
 			<div class="summary">
-				<div>$Run.Count queries took $Run.TotalTime ms and $Run.DuplicateCount duplicates stole $Run.DuplicateTime ms</div>
+				<div>$List.Count queries took $List.TotalTime ms and $List.DuplicateCount duplicates stole $List.DuplicateTime ms</div>
 			</div>
 		</div>
 		
@@ -45,14 +45,14 @@
 						<th>sha1</th>
 						<th>query</th>
 					</tr>
-					<% control $Queries %>
+					<% loop List %>
 					<tr>
 						<td>$Time</td>
 						<td <% if Duplicates %>class="duplicates" style="background-color: #$BackgroundColor; color: #$Color">$Duplicates <% else %>><% end_if %></td>
 						<td class="type-$Type">$Sha1</td>
 						<td class="type-$Type query"><span class="display">$QuerySummary</span><span class="hide">$Query</span></td>
 					</tr>
-					<% end_control %>
+					<% end_loop %>
 				</thead>
 			</table>
 		</div>

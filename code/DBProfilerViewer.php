@@ -9,6 +9,8 @@ class DBProfilerViewer extends Controller {
 		'' => 'index',
 		'$Action' => 'show',
 	);
+	
+	protected $List = null;
 
 	/**
 	 *
@@ -16,14 +18,15 @@ class DBProfilerViewer extends Controller {
 	 */
 	public function index(SS_HTTPRequest $request) {
 
-		$list = new DBProfilerQueryList();
+		$list = new ArrayList();
 		foreach($this->getHistory() as $data) {
 			$query = unserialize(file_get_contents($data['filepath']));
 			$query->DateTime = $data['date'];
 			$query->Sha1 = $data['sha'];
 			$list->push($query);
 		}
-		return $this->renderWith('DBProfilerViewer_index', array('QueryList' => $list) );
+		$this->List = $list;
+		return $this->renderWith('DBProfilerViewer_index');
 	}
 
 	public function Link() {
@@ -39,7 +42,8 @@ class DBProfilerViewer extends Controller {
 		Requirements::javascript('profiler/javascript/dbprofiler.js');
 		$sha = $request->param('Action');
 		$list = $this->getLogData($sha);
-		return $this->renderWith('DBProfilerViewer_show', array('Run' => $list, 'Queries' => $list) );
+		$this->List = $list;
+		return $this->renderWith('DBProfilerViewer_show');
 	}
 
 	/**
