@@ -23,6 +23,7 @@
 			.type-insert {color:#060}
 			.duplicates{ border: 1px solid #000; text-align: center;}
 			td.query {cursor: pointer;}
+			td{vertical-align:top;}
 			.hide { display: none; }
 		</style>
 
@@ -44,6 +45,7 @@
 						<th>dupe</th>
 						<th>sha1</th>
 						<th>query</th>
+						<th>stack</th>>
 					</tr>
 					<% loop List %>
 					<tr>
@@ -51,6 +53,10 @@
 						<td <% if Duplicates %>class="duplicates" style="background-color: #$BackgroundColor; color: #$Color">$Duplicates <% else %>><% end_if %></td>
 						<td class="type-$Type">$Sha1</td>
 						<td class="type-$Type query"><span class="display">$QuerySummary</span><span class="hide">$Query</span></td>
+						<td>
+							<span class="display"><a href="">Show trace</a></span>
+							<span class="hide">$Stacktrace.Trace</span>
+						</td>
 					</tr>
 					<% end_loop %>
 				</thead>

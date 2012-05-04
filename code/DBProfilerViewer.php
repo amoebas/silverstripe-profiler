@@ -60,7 +60,7 @@ class DBProfilerViewer extends Controller {
 
 		$pattern = '|profiler-([0-9]*-[0-9]*-[0-9]*)_([0-9]*-[0-9]*-[0-9]*)_(.*)\.log|';
 
-		$list = glob('/tmp/profiler-*.log');
+		$list = glob(DBProfiler::get_log_dir().'profiler-*.log');
 
 		foreach($list as $filepath) {
 			preg_match($pattern, $filepath, $matches);
@@ -85,13 +85,13 @@ class DBProfilerViewer extends Controller {
 	 */
 	protected function getLogData($sha) {
 		$niceList = new DBProfilerQueryList();
-		$list = $this->getHistory();
-		foreach($list as $item) {
+		foreach($this->getHistory() as $item) {
 			if($item['sha'] == $sha) {
 				$queries = unserialize(file_get_contents($item['filepath']));
 				break;
 			}
 		}
+		
 		$niceList->setURL($queries->getURL());
 		foreach($queries as $query) {
 			$niceList->push($this->getAnalyzedQueryObject($query));
