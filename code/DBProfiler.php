@@ -92,7 +92,6 @@ class DBProfiler {
 		}
 		if(function_exists('xdebug_get_function_stack')) {
 			$stack = xdebug_get_function_stack();
-			
 			$this->lastStacktrace = new DBStacktrace(array_slice($stack,0,-2));
 		}
 		$this->lastQuery = $sql;

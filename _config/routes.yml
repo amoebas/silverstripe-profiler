@@ -1,0 +1,7 @@
+---
+Name: profilerroutes
+---
+Director:
+  rules:
+     'dev/profiler': 'DBProfilerViewer'
+

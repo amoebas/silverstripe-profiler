@@ -1,7 +1,7 @@
-diff --git sapphire/model/DB.php model/DB.php
+diff --git framework/model/DB.php model/DB.php
 index d3adc26..51d93a8 100644
---- sapphire/model/DB.php
-+++ sapphire/model/DB.php
+--- framework/model/DB.php
++++ framework/model/DB.php
 @@ -117,6 +117,16 @@ class DB {
  		return self::getConn()->getConnect($parameters);
  	}
