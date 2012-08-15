@@ -38,7 +38,7 @@ class DBProfilerViewer extends Controller {
 	 * @param SS_HTTPRequest $request
 	 */
 	public function show(SS_HTTPRequest $request) {
-		Requirements::javascript('sapphire/thirdparty/jquery/jquery.js');
+		Requirements::javascript('framework/thirdparty/jquery/jquery.js');
 		Requirements::javascript('profiler/javascript/dbprofiler.js');
 		$sha = $request->param('Action');
 		$list = $this->getLogData($sha);

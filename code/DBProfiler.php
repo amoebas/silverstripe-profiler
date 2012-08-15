@@ -38,6 +38,53 @@ class DBProfiler {
 	 */
 	protected $list = null;
 
+	protected $database = null;
+
+
+	/**
+	 *
+	 * @param SS_Database $database
+	 */
+	public function __construct(SS_Database $database) {
+		$this->list = new DBProfilerQueryList();
+		$this->setDatabase($database);
+	}
+
+	/**
+	 *
+	 * @param SS_Database $database
+	 */
+	public function setDatabase($database) {
+		$this->database = $database;
+	}
+
+	/**
+	 *
+	 * @return SS_Database
+	 */
+	public function getDatabase() {
+		return $this->database;
+	}
+	
+	public function execute(SQLQuery $query) {
+		$this->start($query->sql());
+		$result = $this->getDatabase()->execute($query);
+		$this->stop();
+		return $result;
+	}
+
+	/**
+	 * Proxy the rest of the method calls to the backend database
+	 *
+	 * @param string $name
+	 * @param array $arguments
+	 * @return mixed
+	 */
+	public function __call($name, $arguments) {
+		return call_user_func_array(array($this->getDatabase(), $name), $arguments);
+	}
+
+
 	/**
 	 *
 	 * @return string
@@ -63,13 +110,6 @@ class DBProfiler {
 		if($dir_exists) { return true; }
 		if(!is_dir($dir)) {  $dir_exists = mkdir($dir, 0777, true); }
 		else { $dir_exists = true; }
-	}
-
-	/**
-	 *
-	 */
-	public function __construct() {
-		$this->list = new DBProfilerQueryList();
 	}
 
 	/**
