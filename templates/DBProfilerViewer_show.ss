@@ -45,7 +45,7 @@
 						<th>dupe</th>
 						<th>sha1</th>
 						<th>query</th>
-						<th>stack</th>>
+						<th>stack</th>
 					</tr>
 					<% loop List %>
 					<tr>
