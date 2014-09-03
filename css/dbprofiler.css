@@ -47,6 +47,10 @@ td.query {
     cursor: pointer;
 }
 
+.cursor:hover {
+    text-decoration: underline;
+}
+
 tr.odd td {
    background: #dde9ff;
 }
