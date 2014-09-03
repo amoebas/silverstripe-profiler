@@ -14,13 +14,12 @@ that corresponds to the total number of duplicates on the page.
 That said, it's purely a playground for profiling and is most likely there are
 bugs and weird features.
 
-# Installation 3.0
+# Installation 3.*
 
     git clone git://github.com/amoebas/silverstripe-profiler.git profiler
-    sapphire/sake dev/build
     ./profiler/patches/patch-core.sh
 
-Load a page with ?flush=1
+Load a page in your browser with ?flush=1
 
 # Installation 2.4
 
@@ -30,7 +29,7 @@ Load a page with ?flush=1
     ./sapphire/sake dev/build
     ./profiler/patches/patch-core.sh
 
-Load a page with ?flush=1
+Load a page in your browser with ?flush=1
 
 # Usage
 
