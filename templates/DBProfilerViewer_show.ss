@@ -1,66 +1,60 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>DBProfiler - Show queries for request</title>
-		<style type="text/css">
-			body { background-color:#eee; margin:0; padding:0; font-family:Helvetica,Arial,sans-serif; }
-			.info { border-bottom:1px dotted #333; background-color:#ccdef3; margin:0; padding:6px 12px; }
-			.info h1 { margin:0; padding:0; color:#333; letter-spacing:-2px; }
-			.header { margin:0; border-bottom:6px solid #ccdef3; height:23px; background-color:#666673;
-					 padding:4px 0 2px 6px; }
-			.trace { padding:6px 12px; }.trace li { font-size:14px; margin:6px 0; }pre { margin-left:18px; }
-			pre span { color:#999;}
-			pre .error { color:#f00; }.pass { margin-top:18px; padding:2px 20px 2px 40px; color:#006600; background:#E2F9E3; border:1px solid #8DD38D; }
-			.fail { margin-top:18px; padding:2px 20px 2px 40px; color:#C80700; background:#FFE9E9; border:1px solid #C80700; }
-			.failure span { color:#C80700; font-weight:bold; }
-			.list {padding:6px 12px; }
-			.list table {font-size:14px;}
-			.summary {font-size: 14px;}
-			.type-show {color: #888;}
-			.type-select {color: #000;}
-			.type-delete {color:#900;}
-			.type-update {color:#006;}
-			.type-insert {color:#060}
-			.duplicates{ border: 1px solid #000; text-align: center;}
-			td.query {cursor: pointer;}
-			td{vertical-align:top;}
-			.hide { display: none; }
-		</style>
+<head><title>GET /dev/</title>
+    <link rel="stylesheet" type="text/css" href="http://sandbox.dev/framework/css/debug.css"/>
+</head>
+<body>
+<div class="info">
+    <h1>SilverStripe Development DBProfiler</h1>
+    <h3>$AbsoluteBaseURL</h3><a href="$Link">DBProfile</a>
+    <div>$List.Count queries took $List.TotalTime ms and $List.DuplicateCount duplicates stole $List.DuplicateTime ms</div>
+</div>
 
-	</head>
-	<body>
-		<div class="info">
-			<h1>DBProfiler</h1>
-			<a href="$Link">Back to list</a>
-			<div class="summary">
-				<div>$List.Count queries took $List.TotalTime ms and $List.DuplicateCount duplicates stole $List.DuplicateTime ms</div>
-			</div>
-		</div>
-		
-		<div class="list">
-			<table>
-				<thead>
-					<tr>
-						<th>ms</th>
-						<th>dupe</th>
-						<th>sha1</th>
-						<th>query</th>
-						<th>stack</th>
-					</tr>
-					<% loop List %>
-					<tr>
-						<td>$Time</td>
-						<td <% if Duplicates %>class="duplicates" style="background-color: #$BackgroundColor; color: #$Color">$Duplicates <% else %>><% end_if %></td>
-						<td class="type-$Type">$Sha1</td>
-						<td class="type-$Type query"><span class="display">$QuerySummary</span><span class="hide">$Query</span></td>
-						<td>
-							<span class="display"><a href="">Show trace</a></span>
-							<span class="hide">$Stacktrace.Trace</span>
-						</td>
-					</tr>
-					<% end_loop %>
-				</thead>
-			</table>
-		</div>
-	</body>
+<div class="options">
+    <table id="listview">
+        <thead>
+        <tr>
+            <th>Ms</th>
+            <th>Dupes</th>
+            <th>sha1</th>
+            <th>Query</th>
+            <th>Trace</th>
+        </tr>
+        </thead>
+
+        <tbody>
+	        <% loop $List %>
+            <tr>
+                <td>$Time</td>
+                <td class="center">
+	                <div <% if $Duplicates %>class="duplicates" style="background-color: #$BackgroundColor; color: #$Color"<% else %><% end_if %>>$Duplicates</div>
+                </td>
+                <td class="type-$Type">$Sha1</td>
+                <td class="type-$Type query">
+	                <% if $QuerySummary %>
+                        <span class="display cursor">$QuerySummary</span>
+                        <span class="hide cursor">$Query</span></td>
+	                <% else %>
+                        <span class="display">$Query</span>
+	                <% end_if %>
+                <td>
+                    <span class="display cursor">show</span>
+                    <span class="hide cursor">$Stacktrace.Trace</span>
+                </td>
+            </tr>
+	        <% end_loop %>
+        </tbody>
+
+    </table>
+</div>
+</div>
+<script>
+    $(document).ready( function () {
+        $('#listview').DataTable({
+            "paging": false,
+            "order": []
+        });
+    });
+</script>
+</body>
 </html>

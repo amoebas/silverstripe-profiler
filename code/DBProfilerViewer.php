@@ -5,23 +5,47 @@
  */
 class DBProfilerViewer extends Controller {
 
+	/**
+	 * @var array
+	 */
 	private static $allowed_actions = array(
 		'show',
 	);
 
+	/**
+	 * @var array
+	 */
 	public static $url_handlers = array(
 		'' => 'index',
 		'$Action' => 'show',
 	);
-	
+
+	/**
+	 * @var ArrayList
+	 */
 	protected $List = null;
 
 	/**
 	 *
+	 */
+	public function init() {
+		parent::init();
+		$jQuery = Controller::join_links(Director::absoluteBaseURL(), THIRDPARTY_DIR, 'jquery/jquery.js');
+		Requirements::javascript($jQuery);
+		Requirements::javascript('//cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js');
+		Requirements::javascript('profiler/javascript/dbprofiler.js');
+		Requirements::css('//cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css');
+		Requirements::css('profiler/css/dbprofiler.css');
+		$debugCSS = Controller::join_links(Director::absoluteBaseURL(), FRAMEWORK_DIR, 'css/debug.css');
+		Requirements::css($debugCSS);
+	}
+
+	/**
+	 *
 	 * @param SS_HTTPRequest $request
+	 * @return \HTMLText
 	 */
 	public function index(SS_HTTPRequest $request) {
-
 		$list = new ArrayList();
 		foreach($this->getHistory() as $data) {
 			$query = unserialize(file_get_contents($data['filepath']));
@@ -33,6 +57,9 @@ class DBProfilerViewer extends Controller {
 		return $this->renderWith('DBProfilerViewer_index');
 	}
 
+	/**
+	 * @return string
+	 */
 	public function Link() {
 		return Director::absoluteBaseURL().'dev/profiler/';
 	}
@@ -40,10 +67,9 @@ class DBProfilerViewer extends Controller {
 	/**
 	 *
 	 * @param SS_HTTPRequest $request
+	 * @return \HTMLText
 	 */
 	public function show(SS_HTTPRequest $request) {
-		Requirements::javascript('framework/thirdparty/jquery/jquery.js');
-		Requirements::javascript('profiler/javascript/dbprofiler.js');
 		$sha = $request->param('Action');
 		$list = $this->getLogData($sha);
 		$this->List = $list;
@@ -106,6 +132,10 @@ class DBProfilerViewer extends Controller {
 		return $niceList;
 	}
 
+	/**
+	 * @param $list
+	 * @return DBProfilerQueryList
+	 */
 	protected function markDuplicates($list) {
 		$counted = array_count_values($list->column('hash'));
 		$result = new DBProfilerQueryList();
@@ -118,6 +148,10 @@ class DBProfilerViewer extends Controller {
 		return $result;
 	}
 
+	/**
+	 * @param $query
+	 * @return string
+	 */
 	protected function getAnalyzedQueryObject($query) {
 		preg_match_all('|\"([a-z_A-Z]*)\"\."([a-z_A-Z]*)\"|', $query->query, $matches);
 		$query->tables = array_unique($matches[1]);
@@ -136,7 +170,6 @@ class DBProfilerViewer extends Controller {
 		} elseif(strpos(trim($query->query), 'DESCRIBE') === 0) {
 			$query->type = 'show';
 		}
-
 		return $query;
 	}
 }

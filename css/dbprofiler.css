@@ -1,0 +1,56 @@
+#listview {
+    font-size: 13px;
+}
+
+#listview td {
+    vertical-align: text-top;
+}
+
+#listview .hide {
+    display: none;
+}
+
+.type-show {
+    color: #888;
+}
+
+.type-select {
+    color: #000;
+}
+
+.type-delete {
+    color: #900;
+}
+
+.type-update {
+    color: #006;
+}
+
+.type-insert {
+    color: #060
+}
+
+.center {
+    text-align: center;
+}
+
+.duplicates {
+    border: 1px solid #000;
+    margin: 1px;
+}
+
+td.query {
+    font-family: monospace;
+}
+
+.cursor {
+    cursor: pointer;
+}
+
+tr.odd td {
+   background: #dde9ff;
+}
+
+tr.even {
+
+}

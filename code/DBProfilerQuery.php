@@ -2,8 +2,16 @@
 
 class DBProfilerQuery extends ViewableData {
 
+
+	/**
+	 *
+	 * @var string - select, delete, update, insert, show
+	 */
 	public $type = null;
 
+	/**
+	 * @var int
+	 */
 	protected $duplicates = 0;
 
 	/**
@@ -12,21 +20,30 @@ class DBProfilerQuery extends ViewableData {
 	 */
 	protected $stacktrace = null;
 
+	/**
+	 * @return bool
+	 */
 	public function canView() {
 		return true;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTime() {
 		return sprintf("%0.1f", $this->time);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getBackgroundColor() {
 		return substr($this->hash,0,6);
 	}
 
 	/**
 	 *
-	 * @param array $trace
+	 * @param \DBStacktrace $trace
 	 */
 	public function setStacktrace(DBStacktrace $trace) {
 		$this->stacktrace = $trace;
@@ -54,22 +71,40 @@ class DBProfilerQuery extends ViewableData {
 		return ($tot/3<128)?'fff':'000';
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getSha1() {
 		return $this->hash;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getQuerySummary() {
-		return substr($this->query,0,80);
+		if(strlen($this->query)<80) {
+			return false;
+		}
+		return substr($this->query,0,80) . '...';
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function getQuery() {
 		return $this->query;
 	}
 
+	/**
+	 * @return string - select, delete, update, insert, show
+	 */
 	public function getType() {
 		return $this->type;
 	}
-	
+
+	/**
+	 * @return int
+	 */
 	public function getDuplicates() {
 		return $this->duplicates;
 	}
