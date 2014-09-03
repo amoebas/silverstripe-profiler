@@ -5,6 +5,10 @@
  */
 class DBProfilerViewer extends Controller {
 
+	private static $allowed_actions = array(
+		'show',
+	);
+
 	public static $url_handlers = array(
 		'' => 'index',
 		'$Action' => 'show',
